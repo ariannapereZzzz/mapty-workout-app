@@ -26,13 +26,25 @@ class Running extends Workout {
   constructor(coords, distance, duration, cadence) {
     super(coords, distance, duration);
     this.cadence = cadence;
+    this.calcPace();
+  }
+
+  calcPace() {
+    this.pace = this.duration / this.distance;
+    return this.pace;
   }
 }
 
 class Cycling extends Workout {
-  constructor(coords, distance, duration, cadence) {
+  constructor(coords, distance, duration, elevationGain) {
     super(coords, distance, duration);
-    this.cadence = cadence;
+    this.elevationGain = elevationGain;
+    this.calcSpeed();
+  }
+  //    km/h
+  calcSpeed() {
+    this.speed = this.distance / (this.duration / 60);
+    return this.speed;
   }
 }
 
@@ -95,7 +107,6 @@ class App {
         '';
 
     // Display marker
-    console.log(mapEvent);
     const { lat, lng } = this.#mapEvent.latlng;
     L.marker([lat, lng])
       .addTo(this.#map)
